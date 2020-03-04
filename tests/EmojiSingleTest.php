@@ -1,29 +1,45 @@
 <?php
 
-class EmojiSingleTest extends \PHPUnit\Framework\TestCase {
+use Emoji\Emoji;
+use PHPUnit\Framework\TestCase;
 
-  public function testSingleEmoji() {
-    $string = '😻';
-    $emoji = Emoji\is_single_emoji($string);
-    $this->assertSame($string, $emoji['emoji']);
-  }
+class EmojiSingleTest extends TestCase
+{
+    /** @var Emoji */
+    public $emojiService;
 
-  public function testSingleCompositeEmoji() {
-    $string = '👨‍👩‍👦‍👦';
-    $emoji = Emoji\is_single_emoji($string);
-    $this->assertSame($string, $emoji['emoji']);
-  }
+    public function __construct($name = null, array $data = [], $dataName = '')
+    {
+        $this->emojiService = new Emoji();
 
-  public function testMultipleEmoji() {
-    $string = '😻🐈';
-    $emoji = Emoji\is_single_emoji($string);
-    $this->assertFalse($emoji);
-  }
+        parent::__construct($name, $data, $dataName);
+    }
 
-  public function testSingleEmojiWithText() {
-    $string = 'kitty 😻';
-    $emoji = Emoji\is_single_emoji($string);
-    $this->assertFalse($emoji);
-  }
+    public function testSingleEmoji()
+    {
+        $string = '😻';
+        $emoji = $this->emojiService->isSingleEmoji($string);
+        $this->assertSame($string, $emoji['emoji']);
+    }
 
+    public function testSingleCompositeEmoji()
+    {
+        $string = '👨‍👩‍👦‍👦';
+        $emoji = $this->emojiService->isSingleEmoji($string);
+        $this->assertSame($string, $emoji['emoji']);
+    }
+
+    public function testMultipleEmoji()
+    {
+        $string = '😻🐈';
+        $emoji = $this->emojiService->isSingleEmoji($string);
+        $this->assertFalse($emoji);
+    }
+
+    public function testSingleEmojiWithText()
+    {
+        $string = 'kitty 😻';
+        $emoji = $this->emojiService->isSingleEmoji($string);
+        $this->assertFalse($emoji);
+    }
 }
