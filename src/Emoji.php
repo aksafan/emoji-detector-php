@@ -133,7 +133,7 @@ class Emoji
      *
      * @return array
      */
-    private function loadMap(): array
+    public function loadMap(): array
     {
         return json_decode(file_get_contents(__DIR__ . '/map.json'), true);
     }
@@ -143,7 +143,7 @@ class Emoji
      *
      * @return string
      */
-    private function loadRegexp(): string
+    public function loadRegexp(): string
     {
         return '/(?:' . json_decode(file_get_contents(__DIR__ . '/regexp.json')) . ')/u';
     }
