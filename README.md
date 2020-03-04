@@ -4,6 +4,56 @@ Emoji Detection
 This library will find all emoji in an input string and return information about each emoji character. It supports emoji with skin tone modifiers, as well as the composite emoji that are made up of multiple people.
 
 [![Build Status](https://travis-ci.org/aaronpk/emoji-detector-php.svg?branch=master)](https://travis-ci.org/aaronpk/emoji-detector-php)
+_______________
+
+N.B. This is fork of original [library](https://github.com/aaronpk/emoji-detector-php), made to update emoji map.
+------------
+Be aware, that this release (1.0.0) breaks backward compatibility:
+1. using of all simple function was changed with methods from service object Emoji\Emogi;
+2. output format is the same as it was before;
+3. increased minimum PHP version to 7.1.
+
+##### Before release:
+
+```php
+$input = 'Hello 👍🏼 World 👨‍👩‍👦‍👦';
+$emoji = Emoji\detect_emoji($input);
+
+print_r($emoji);
+```
+##### After release:
+
+```php
+$input = 'Hello 👍🏼 World 👨‍👩‍👦‍👦';
+$emojiService = new \Emoji\Emoji();
+$emoji = $emojiService->detectEmoji($input);
+//OR
+$emoji = (new \Emoji\Emoji())->detectEmoji('Hello 👍🏼 World 👨‍👩‍👦‍👦');
+
+print_r($emoji);
+```
+
+Same goes for detecting a single emoji:
+
+##### Before release:
+
+```php
+$input = ('👨‍👩‍👦‍👦');
+$emoji = Emoji\isSingleEmoji($input);
+
+print_r($emoji);
+```
+##### After release:
+
+```php
+$input = ('👨‍👩‍👦‍👦');
+$emojiService = new \Emoji\Emoji();
+$emoji = $emojiService->isSingleEmoji($input);
+//OR
+$emoji = (new \Emoji\Emoji())->isSingleEmoji(('👨‍👩‍👦‍👦'));
+
+print_r($emoji);
+```
 
 Installation
 ------------
@@ -14,7 +64,7 @@ composer require p3k/emoji-detector
 
 Or include `src/Emoji.php` in your project, and make sure the `map.json` and `regexp.json` files are available in the same folder as `Emoji.php`. You don't need any of the other files for use in your own projects.
 
-Usage
+Usage (deprecated one!)
 -----
 
 ### Detect Emoji
@@ -79,7 +129,7 @@ Array
 Since simply counting the number of unicode characters in a string does not tell you how many visible emoji are in the string, determining whether a single character is an emoji is more involved. This function will return the emoji data only if the string contains a single emoji character, and false otherwise.
 
 ```php
-$emoji = Emoji\is_single_emoji('👨‍👩‍👦‍👦');
+$emoji = Emoji\isSingleEmoji('👨‍👩‍👦‍👦');
 print_r($emoji);
 ```
 
@@ -106,7 +156,7 @@ Array
 ```
 
 ```php
-$emoji = Emoji\is_single_emoji('😻🐈');
+$emoji = Emoji\isSingleEmoji('😻🐈');
 // false
 ```
 
